@@ -15,7 +15,6 @@ router.get('/', (req, res) => {
 
   router.get('/:id/shoppingList', (req, res) => {
     const { id } = req.params;
-  
     db.getShoppingList(id)
     .then(response => {
       if (response.length) {
@@ -29,4 +28,22 @@ router.get('/', (req, res) => {
       res.status(500).json({ message: 'Failed to get shopping list' });
     });
   });
+
+  router.get('/:id/instructions', (req, res) => {
+    const { id } = req.params;
+    db.getInstructions(id)
+    .then(response => {
+      if (response.length) {
+        res.json(response);
+      } else {
+        res.status(404).json({ message: 'Could not find ID' })
+      }
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({ message: 'Failed to get shopping list' });
+    });
+  });
+
+
   module.exports = router;
